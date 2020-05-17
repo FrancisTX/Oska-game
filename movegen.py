@@ -14,9 +14,6 @@ def movegen(board, turn):
                         possible_states.append(element)
     return possible_states
 
-def can_move(board, row, col):
-    return 0
-
 def move(board, row, col):
     possbile_move = []
     first_row_space = len(board[0])
