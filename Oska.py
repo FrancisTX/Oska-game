@@ -1,0 +1,101 @@
+import copy
+
+def oskaplayer(board, turn, steps_ahead):
+    return 0
+
+def movegen(board, turn):
+    possible_states = []
+    for row in range(len(board)):
+        for col in range(len(board[row])):
+            if board[row][col] == turn:
+                states = move(board, row, col)
+                for element in states:
+                    if element not in possible_states:
+                        possible_states.append(element)
+    return possible_states
+
+def can_move(board, row, col):
+    return 0
+
+def move(board, row, col):
+    possbile_move = []
+    first_row_space = len(board[0])
+    if board[row][col] == 'w':
+        #move forward on the diagonal
+        #check the chess's position at the 0 or the end
+        if row < len(board)/2:
+            if col == 0:
+                if board[row+1][0] == '-':
+                    new_board = copy.deepcopy(board)
+                    temp_next_row = list(new_board[row+1])
+                    temp_this_row = list(new_board[row])
+                    temp_next_row[0] = 'w'
+                    temp_this_row[col] = '-'
+                    new_board[row+1] = ''.join(temp_next_row)
+                    new_board[row] = ''.join(temp_this_row)
+                    possbile_move.append(new_board)
+            elif col == first_row_space - (row + 1):
+                if board[row+1][len(board[row+1]) - 1] == '-':
+                    new_board = copy.deepcopy(board)
+                    temp_next_row = list(new_board[row+1])
+                    temp_this_row = list(new_board[row])
+                    temp_next_row[len(board[row+1]) - 1] = 'w'
+                    temp_this_row[col] = '-'
+                    new_board[row+1] = ''.join(temp_next_row)
+                    new_board[row] = ''.join(temp_this_row)
+                    possbile_move.append(new_board)
+            else:
+                if board[row+1][col] == '-':
+                    new_board = copy.deepcopy(board)
+                    temp_next_row = list(new_board[row+1])
+                    temp_this_row = list(new_board[row])
+                    temp_next_row[col] ='w'
+                    temp_this_row[col] = '-'
+                    new_board[row+1] = ''.join(temp_next_row)
+                    new_board[row] = ''.join(temp_this_row)
+                    possbile_move.append(new_board)
+                if board[row+1][col-1] == '-':
+                    new_board = copy.deepcopy(board)
+                    temp_next_row = list(new_board[row+1])
+                    temp_this_row = list(new_board[row])
+                    temp_next_row[col-1] = 'w'
+                    temp_this_row[col] = '-'
+                    new_board[row+1] = ''.join(temp_next_row)
+                    new_board[row] = ''.join(temp_this_row)
+                    possbile_move.append(new_board)
+
+        elif row >= len(board)/2 and row != 2 * first_row_space - 4:
+            if board[row+1][col] == '-':
+                new_board = copy.deepcopy(board)
+                temp_next_row = list(new_board[row+1])
+                temp_this_row = list(new_board[row])
+                temp_next_row[col] == 'w'
+                temp_this_row[col] = '-'
+                new_board[row+1] = ''.join(temp_next_row)
+                new_board[row] = ''.join(temp_this_row)
+                possbile_move.append(new_board)
+            if board[row+1][col+1] == '-':
+                new_board = copy.deepcopy(board)
+                temp_next_row = list(new_board[row+1])
+                temp_this_row = list(new_board[row])
+                temp_next_row[col+1] == 'w'
+                temp_this_row[col] = '-'
+                new_board[row+1] = ''.join(temp_next_row)
+                new_board[row] = ''.join(temp_this_row)
+                possbile_move.append(new_board)
+            if row >= len(board)/2:
+                temp_this_row = list(new_board[row])
+                temp_next_row = list(new_board[row+1])
+                temp_next_next_row = list(new_board[row+2])
+                temp_this_row[col] = '-'
+                temp_next_row[col+1] = '-'
+                temp_next_next_row[col+2] = 'w'
+                new_board[row+2] = ''.join(temp_next_next_row)
+                new_board[row+1] = ''.join(temp_next_row)
+                new_board[row] = ''.join(temp_this_row)
+    return possbile_move
+
+
+
+
+print(movegen(['----', 'www', '--', '---', 'bbbb'], 'w'))
