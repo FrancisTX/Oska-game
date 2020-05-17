@@ -34,7 +34,7 @@ def move(board, row, col):
                     new_board[row+1] = ''.join(temp_next_row)
                     new_board[row] = ''.join(temp_this_row)
                     possbile_move.append(new_board)
-            elif col == first_row_space - (row + 1):
+            if col == first_row_space - (row + 1):
                 if board[row+1][len(board[row+1]) - 1] == '-':
                     new_board = copy.deepcopy(board)
                     temp_next_row = list(new_board[row+1])
@@ -44,7 +44,113 @@ def move(board, row, col):
                     new_board[row+1] = ''.join(temp_next_row)
                     new_board[row] = ''.join(temp_this_row)
                     possbile_move.append(new_board)
-            else:
+
+            if row < len(board)/2 - 1:
+                print("Hey")
+                if col == 0 and board[row+1][col] == 'b':
+                    new_board = copy.deepcopy(board)
+                    temp_this_row = list(new_board[row])
+                    temp_next_row = list(new_board[row+1])
+                    temp_next_next_row = list(new_board[row+2])
+                    temp_this_row[col] = '-'
+                    temp_next_row[col] = '-'
+                    temp_next_next_row[col] = 'w'
+                    new_board[row+2] = ''.join(temp_next_next_row)
+                    new_board[row+1] = ''.join(temp_next_row)
+                    new_board[row] = ''.join(temp_this_row)
+                    possbile_move.append(new_board)
+                elif col == first_row_space - (row + 1) and board[row+1][col - 1] == 'b':
+                    new_board = copy.deepcopy(board)
+                    temp_this_row = list(new_board[row])
+                    temp_next_row = list(new_board[row+1])
+                    temp_next_next_row = list(new_board[row+2])
+                    temp_this_row[col] = '-'
+                    temp_next_row[col-1] = '-'
+                    temp_next_next_row[col-2] = 'w'
+                    new_board[row+2] = ''.join(temp_next_next_row)
+                    new_board[row+1] = ''.join(temp_next_row)
+                    new_board[row] = ''.join(temp_this_row)
+                    possbile_move.append(new_board)
+                else:
+                    if board[row+1][col - 1] == 'b': 
+                        if (col - 1) != 0:
+                            new_board = copy.deepcopy(board)
+                            temp_this_row = list(new_board[row])
+                            temp_next_row = list(new_board[row+1])
+                            temp_next_next_row = list(new_board[row+2])
+                            temp_this_row[col] = '-'
+                            temp_next_row[col-1] = '-'
+                            temp_next_next_row[col-2] = 'w'
+                            new_board[row+2] = ''.join(temp_next_next_row)
+                            new_board[row+1] = ''.join(temp_next_row)
+                            new_board[row] = ''.join(temp_this_row)
+                            possbile_move.append(new_board)
+
+                    if board[row+1][col] == 'b' :
+                        if col != first_row_space - (row+2):
+                            new_board = copy.deepcopy(board)
+                            temp_this_row = list(new_board[row])
+                            temp_next_row = list(new_board[row+1])
+                            temp_next_next_row = list(new_board[row+2])
+                            temp_this_row[col] = '-'
+                            temp_next_row[col] = '-'
+                            temp_next_next_row[col] = 'w'
+                            new_board[row+2] = ''.join(temp_next_next_row)
+                            new_board[row+1] = ''.join(temp_next_row)
+                            new_board[row] = ''.join(temp_this_row)
+                            possbile_move.append(new_board)
+            if row == len(board)/2 - 1:
+                if col == 0 and board[row+1][0] == 'b':
+                    new_board = copy.deepcopy(board)
+                    temp_this_row = list(new_board[row])
+                    temp_next_row = list(new_board[row+1])
+                    temp_next_next_row = list(new_board[row+2])
+                    temp_this_row[col] = '-'
+                    temp_next_row[col] = '-'
+                    temp_next_next_row[col+1] = 'w'
+                    new_board[row+2] = ''.join(temp_next_next_row)
+                    new_board[row+1] = ''.join(temp_next_row)
+                    new_board[row] = ''.join(temp_this_row)
+                    possbile_move.append(new_board)
+                if col == 1:
+                    if board[row+1][0] == 'b':
+                        new_board = copy.deepcopy(board)
+                        temp_this_row = list(new_board[row])
+                        temp_next_row = list(new_board[row+1])
+                        temp_next_next_row = list(new_board[row+2])
+                        temp_this_row[col] = '-'
+                        temp_next_row[col-1] = '-'
+                        temp_next_next_row[col-1] = 'w'
+                        new_board[row+2] = ''.join(temp_next_next_row)
+                        new_board[row+1] = ''.join(temp_next_row)
+                        new_board[row] = ''.join(temp_this_row)
+                        possbile_move.append(new_board)
+                    if board[row+1][1] == 'b':
+                        new_board = copy.deepcopy(board)
+                        temp_this_row = list(new_board[row])
+                        temp_next_row = list(new_board[row+1])
+                        temp_next_next_row = list(new_board[row+2])
+                        temp_this_row[col] = '-'
+                        temp_next_row[col] = '-'
+                        temp_next_next_row[col+1] = 'w'
+                        new_board[row+2] = ''.join(temp_next_next_row)
+                        new_board[row+1] = ''.join(temp_next_row)
+                        new_board[row] = ''.join(temp_this_row)
+                        possbile_move.append(new_board)
+                if col == 2 and board[row+1][1] == 'b':
+                    new_board = copy.deepcopy(board)
+                    temp_this_row = list(new_board[row])
+                    temp_next_row = list(new_board[row+1])
+                    temp_next_next_row = list(new_board[row+2])
+                    temp_this_row[col] = '-'
+                    temp_next_row[col-1] = '-'
+                    temp_next_next_row[col-1] = 'w'
+                    new_board[row+2] = ''.join(temp_next_next_row)
+                    new_board[row+1] = ''.join(temp_next_row)
+                    new_board[row] = ''.join(temp_this_row)
+                    possbile_move.append(new_board)
+
+            if col != 0 and col != first_row_space - (row + 1):
                 if board[row+1][col] == '-':
                     new_board = copy.deepcopy(board)
                     temp_next_row = list(new_board[row+1])
@@ -69,7 +175,7 @@ def move(board, row, col):
                 new_board = copy.deepcopy(board)
                 temp_next_row = list(new_board[row+1])
                 temp_this_row = list(new_board[row])
-                temp_next_row[col] == 'w'
+                temp_next_row[col] = 'w'
                 temp_this_row[col] = '-'
                 new_board[row+1] = ''.join(temp_next_row)
                 new_board[row] = ''.join(temp_this_row)
@@ -78,24 +184,39 @@ def move(board, row, col):
                 new_board = copy.deepcopy(board)
                 temp_next_row = list(new_board[row+1])
                 temp_this_row = list(new_board[row])
-                temp_next_row[col+1] == 'w'
+                temp_next_row[col+1] = 'w'
                 temp_this_row[col] = '-'
                 new_board[row+1] = ''.join(temp_next_row)
                 new_board[row] = ''.join(temp_this_row)
                 possbile_move.append(new_board)
-            if row >= len(board)/2:
-                temp_this_row = list(new_board[row])
-                temp_next_row = list(new_board[row+1])
-                temp_next_next_row = list(new_board[row+2])
-                temp_this_row[col] = '-'
-                temp_next_row[col+1] = '-'
-                temp_next_next_row[col+2] = 'w'
-                new_board[row+2] = ''.join(temp_next_next_row)
-                new_board[row+1] = ''.join(temp_next_row)
-                new_board[row] = ''.join(temp_this_row)
+            if row < 2 * first_row_space - 5:
+                if board[row+1][col] == 'b': 
+                    new_board = copy.deepcopy(board)
+                    temp_this_row = list(new_board[row])
+                    temp_next_row = list(new_board[row+1])
+                    temp_next_next_row = list(new_board[row+2])
+                    temp_this_row[col] = '-'
+                    temp_next_row[col] = '-'
+                    temp_next_next_row[col] = 'w'
+                    new_board[row+2] = ''.join(temp_next_next_row)
+                    new_board[row+1] = ''.join(temp_next_row)
+                    new_board[row] = ''.join(temp_this_row)
+                    possbile_move.append(new_board)
+                if board[row+1][col+1] == 'b':
+                    new_board = copy.deepcopy(board)
+                    temp_this_row = list(new_board[row])
+                    temp_next_row = list(new_board[row+1])
+                    temp_next_next_row = list(new_board[row+2])
+                    temp_this_row[col] = '-'
+                    temp_next_row[col+1] = '-'
+                    temp_next_next_row[col+2] = 'w'
+                    new_board[row+2] = ''.join(temp_next_next_row)
+                    new_board[row+1] = ''.join(temp_next_row)
+                    new_board[row] = ''.join(temp_this_row)
+                    possbile_move.append(new_board)    
     return possbile_move
 
 
 
 
-print(movegen(['----', 'www', '--', '---', 'bbbb'], 'w'))
+print(movegen(['wwwww','bbbb', '---', '--', 'www', 'bbbb', '-----'], 'w'))
