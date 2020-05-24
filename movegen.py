@@ -447,3 +447,8 @@ print(movegen(['-----','bbbb', '---', '--', 'bbb', '----', 'bbbbb'], 'b'))
 print(movegen(['-----','wwww', 'bbb', 'ww', '---', 'wwww', 'bbbbb'], 'b'))
 print(movegen(['wwwww','bbbb', '---', '--', 'www', 'bbbb', '-----'], 'b'))
 print(movegen(['-----','wwww', 'bbb', '--', '---', 'bbbb', '-----'], 'b')) """
+
+"""print(movegen(['--w-','www','-b','--b','b-b-'],'w'))
+print(movegen(['-bw-','---','ww','b-b','--b-'],'b'))
+print(movegen(['----','-w-','-w','--b','---b'],'b'))
+print(movegen(['----w','---w','--b','w-','-b-','---b','----b'],'w'))"""
