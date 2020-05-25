@@ -26,7 +26,7 @@ def move(board, row, col):
     if board[row][col] == 'w':
         #separate the board to three part
         #the first part is row < len(board)/2
-        if row < len(board)/2:
+        if row < (len(board)-1)/2:
             #check if the current piece at the beginning of the row
             #if it is at the beginning of the row, it can only move right downward
             if col == 0:
@@ -51,7 +51,7 @@ def move(board, row, col):
                     new_board[row] = ''.join(temp_this_row)
                     possbile_move.append(new_board)
             #capture the opponent in this if statement
-            if row < len(board)/2 - 1:
+            if row < (len(board)-1)/2 - 1:
                 #at the beginning of the borad, can only capture one way
                 if col == 0 and board[row+1][col] == 'b' and board[row+2][col] == '-':
                     new_board = copy.deepcopy(board)
@@ -109,7 +109,7 @@ def move(board, row, col):
                             possbile_move.append(new_board)
             #The second part is the row = len(board)/2 - 1, we just have 3 piece at most in this row.
             #this part is only for capturing
-            if row == len(board)/2 - 1:
+            if row == (len(board)-1)/2 - 1:
                 #at the begining
                 if col == 0 and board[row+1][0] == 'b' and board[row+2][col+1] == '-':
                     new_board = copy.deepcopy(board)
@@ -184,7 +184,7 @@ def move(board, row, col):
                     possbile_move.append(new_board)
 
         #the thrid part row >= len(board)/2 and not at the last row
-        elif row >= len(board)/2 and row != 2 * first_row_space - 4:
+        elif row >= (len(board)-1)/2 and row != 2 * first_row_space - 4:
             #moving left downward
             if board[row+1][col] == '-':
                 new_board = copy.deepcopy(board)
@@ -447,3 +447,4 @@ print(movegen(['-----','bbbb', '---', '--', 'bbb', '----', 'bbbbb'], 'b'))
 print(movegen(['-----','wwww', 'bbb', 'ww', '---', 'wwww', 'bbbbb'], 'b'))
 print(movegen(['wwwww','bbbb', '---', '--', 'www', 'bbbb', '-----'], 'b'))
 print(movegen(['-----','wwww', 'bbb', '--', '---', 'bbbb', '-----'], 'b')) """
+print(movegen(['----','---','-w','-b-','----'],'w'))
