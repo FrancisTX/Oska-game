@@ -1,7 +1,70 @@
 import copy
+import math
 
 def oskaplayer(board, turn, steps_ahead):
-    return 0
+    if turn == 'b':
+        turn = 1
+    else:
+        turn = 0
+    
+    final_score = minimax(steps_ahead, board, turn, 0)
+
+    for elements in movegen(board, turn):
+        if static_eval(elements) == final_score:
+            return elements
+
+def minimax(steps_ahead, board, turn, depth):
+    if depth == steps_ahead:
+        return static_eval(board)
+
+    ## white's turn, choose MAX
+    if turn%2 == 0:
+        states = movegen(board, 'w')
+        max_val = float('-inf') 
+        for elements in states:
+            val = minimax(steps_ahead, elements, turn+1, depth + 1)
+            max_val = max(max_val, val)
+        return max_val
+
+    else:
+        states = movegen(board, 'b')
+        min_val = float('inf') 
+        for elements in states:
+            val = minimax(steps_ahead, elements, turn+1, depth + 1)
+            min_val = min(min_val, val)
+        return min_val
+
+
+def static_eval(board):
+    num_black = 0
+    num_white = 0
+    num_black_first_row = 0
+    num_white_last_row = 0
+    score = 0
+    for row in range(len(board)):
+        for col in range(len(board[row])):
+            if board[row][col] == 'b':
+                num_black += 1
+                if row == 0:
+                    num_black_first_row += 1
+            if board[row][col] == 'w':
+                num_white += 1
+                if row == len(board):
+                    num_white_last_row += 1
+    
+    if num_black == num_black_first_row:
+        score = -(len(board[0]))
+    elif num_white == num_white_last_row:
+        score = len(board[0])
+    elif num_white == 0:
+        score = -(len(board[0]))
+    elif num_black == 0:
+        socre = len(board[0])
+    else:
+        score = num_white - num_black
+            
+    return score
+
 
 #return all the unrepeated next possible states 
 def movegen(board, turn):
@@ -448,7 +511,8 @@ print(movegen(['-----','wwww', 'bbb', 'ww', '---', 'wwww', 'bbbbb'], 'b'))
 print(movegen(['wwwww','bbbb', '---', '--', 'www', 'bbbb', '-----'], 'b'))
 print(movegen(['-----','wwww', 'bbb', '--', '---', 'bbbb', '-----'], 'b')) """
 
-"""print(movegen(['--w-','www','-b','--b','b-b-'],'w'))
+print(movegen(['----','---','-w','-b-','----'],'w'))
+"""
 print(movegen(['-bw-','---','ww','b-b','--b-'],'b'))
 print(movegen(['----','-w-','-w','--b','---b'],'b'))
 print(movegen(['----w','---w','--b','w-','-b-','---b','----b'],'w'))"""
