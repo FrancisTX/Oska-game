@@ -532,15 +532,15 @@ print(movegen(['-----','wwww', 'bbb', 'ww', '---', 'wwww', 'bbbbb'], 'b'))
 print(movegen(['wwwww','bbbb', '---', '--', 'www', 'bbbb', '-----'], 'b'))
 print(movegen(['-----','wwww', 'bbb', '--', '---', 'bbbb', '-----'], 'b')) """
 
-print(oskaplayer(['----','---','-w','-b-','----'],'w',1))
-print(oskaplayer(['----','w-w','bb','---','----'],'w',2))
+#print(oskaplayer(['----','--w','--','bb-','----'],'w',3))
+#print(oskaplayer(['----','w-w','bb','---','----'],'w',2))
 
-print(oskaplayer(['----','w--','b-','w--','----'],'w',2))
+#print(oskaplayer(['----','w--','b-','w--','----'],'w',2))
 #print(movegen(['----','---','--','ww-','----'], 'w'))
 #print(movegen(['----','--w','bb','---','----'],'b'))
-print(oskaplayer(['---b','---','w-','-b-','----'],'w', 3))
+#print(oskaplayer(['---b','---','w-','-b-','----'],'w', 3))
 
-print(oskaplayer(['---b','---','w-','-b-','----'],'w', 3))
+#print(oskaplayer(['---b','---','w-','-b-','----'],'w', 3))
 #print(static_eval(['---b','---','--','-b-','w---']))
 """print(movegen(['--w-','www','-b','--b','b-b-'],'w'))
 print(movegen(['-bw-','---','ww','b-b','--b-'],'b'))
