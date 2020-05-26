@@ -520,29 +520,3 @@ def move(board, row, col):
                     possbile_move.append(new_board)
     return possbile_move
 
-
-
-""" print(movegen(['w---w','b--b', 'b-b', 'b-', '-w-', '----', '-----'], 'w'))
-print(movegen(['wwwww','----', '---', '--', 'www', '----', '-----'], 'w'))
-print(movegen(['-----','wwww', '---', 'ww', '---', 'wwww', '-----'], 'w'))
-print(movegen(['wwww-','bbbb', '---', '--', 'www', 'bbbb', '-----'], 'w'))
-print(movegen(['-----','wwww', 'bbb', '--', '---', '----', '-----'], 'w'))
-print(movegen(['-----','bbbb', '---', '--', 'bbb', '----', 'bbbbb'], 'b'))
-print(movegen(['-----','wwww', 'bbb', 'ww', '---', 'wwww', 'bbbbb'], 'b'))
-print(movegen(['wwwww','bbbb', '---', '--', 'www', 'bbbb', '-----'], 'b'))
-print(movegen(['-----','wwww', 'bbb', '--', '---', 'bbbb', '-----'], 'b')) """
-
-#print(oskaplayer(['----','--w','--','bb-','----'],'w',3))
-#print(oskaplayer(['----','w-w','bb','---','----'],'w',2))
-
-#print(oskaplayer(['----','w--','b-','w--','----'],'w',2))
-#print(movegen(['----','---','--','ww-','----'], 'w'))
-#print(movegen(['----','--w','bb','---','----'],'b'))
-#print(oskaplayer(['---b','---','w-','-b-','----'],'w', 3))
-
-#print(oskaplayer(['---b','---','w-','-b-','----'],'w', 3))
-#print(static_eval(['---b','---','--','-b-','w---']))
-"""print(movegen(['--w-','www','-b','--b','b-b-'],'w'))
-print(movegen(['-bw-','---','ww','b-b','--b-'],'b'))
-print(movegen(['----','-w-','-w','--b','---b'],'b'))
-print(movegen(['----w','---w','--b','w-','-b-','---b','----b'],'w'))"""
