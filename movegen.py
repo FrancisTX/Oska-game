@@ -3,38 +3,53 @@ import math
 
 def oskaplayer(board, turn, steps_ahead):
     if turn == 'b':
-        turn = 1
+        player = 1
     else:
-        turn = 0
+        player = 0
     
-    final_score = minimax(steps_ahead, board, turn, 0)
-
-    for elements in movegen(board, turn):
-        if static_eval(elements) == final_score:
-            return elements
+    val,board =  minimax(steps_ahead, board, player, 0)
+    return board
 
 def minimax(steps_ahead, board, turn, depth):
     if depth == steps_ahead:
-        return static_eval(board)
+        return static_eval(board),board
 
     ## white's turn, choose MAX
     if turn%2 == 0:
         states = movegen(board, 'w')
         max_val = float('-inf') 
+        #go through all possible move
         for elements in states:
-            val = minimax(steps_ahead, elements, turn+1, depth + 1)
-            max_val = max(max_val, val)
-        return max_val
+            #if win, return immediately
+            if static_eval(elements) ==  len(board[0]):
+                return static_eval(elements), elements
+            val, board = minimax(steps_ahead, elements, turn+1, depth + 1)
+            #if val is bigger, update the max_val and the board
+            if val >= max_val:
+                final_board = elements
+                max_val = val
+        return max_val,final_board
 
+    ## black's turn, choose min
     else:
         states = movegen(board, 'b')
-        min_val = float('inf') 
+        min_val = float('inf')
+        #go thourgh all possible moves
         for elements in states:
-            val = minimax(steps_ahead, elements, turn+1, depth + 1)
-            min_val = min(min_val, val)
-        return min_val
+            if static_eval(elements) ==  -len(board[0]):
+                return static_eval(elements), elements
+            val,board = minimax(steps_ahead, elements, turn+1, depth + 1)
+            #update
+            if val <= min_val:
+                final_board = elements
+                min_val = val
+        return min_val,final_board
 
-
+##static evaluation:
+##if w wins, return len(board[0])
+##if b wims, return -len(board[0])
+##if tie, return 0
+##else retuen number_white - number_black
 def static_eval(board):
     num_black = 0
     num_white = 0
@@ -49,17 +64,19 @@ def static_eval(board):
                     num_black_first_row += 1
             if board[row][col] == 'w':
                 num_white += 1
-                if row == len(board):
+                if row == len(board)-1:
                     num_white_last_row += 1
-    
-    if num_black == num_black_first_row:
-        score = -(len(board[0]))
-    elif num_white == num_white_last_row:
-        score = len(board[0])
-    elif num_white == 0:
+
+    if num_white == 0:
         score = -(len(board[0]))
     elif num_black == 0:
-        socre = len(board[0])
+        score = len(board[0])
+    elif num_black == num_white and num_black_first_row == num_white_last_row and num_white == num_black_first_row and num_black == num_white_last_row:
+        score = 0
+    elif num_black != 0 and num_black == num_black_first_row:
+        score += -(len(board[0]))
+    elif num_white !=0 and num_white == num_white_last_row:
+        score = len(board[0])
     else:
         score = num_white - num_black
             
@@ -69,6 +86,8 @@ def static_eval(board):
 #return all the unrepeated next possible states 
 def movegen(board, turn):
     possible_states = []
+    #if static_eval(board) == len(board[0]) or static_eval(board) == -(len(board[0])):
+    #    return board
     for row in range(len(board)):
         for col in range(len(board[row])):
             #check if the current position is the piece we want to move
@@ -78,6 +97,8 @@ def movegen(board, turn):
                 for element in states:
                     if element not in possible_states:
                         possible_states.append(element)
+    if len(possible_states) == 0:
+        possible_states.append(board)
     return possible_states
 
 #return all the possible next states
@@ -89,7 +110,7 @@ def move(board, row, col):
     if board[row][col] == 'w':
         #separate the board to three part
         #the first part is row < len(board)/2
-        if row < len(board)/2:
+        if row < (len(board)-1)/2:
             #check if the current piece at the beginning of the row
             #if it is at the beginning of the row, it can only move right downward
             if col == 0:
@@ -114,7 +135,7 @@ def move(board, row, col):
                     new_board[row] = ''.join(temp_this_row)
                     possbile_move.append(new_board)
             #capture the opponent in this if statement
-            if row < len(board)/2 - 1:
+            if row < (len(board)-1)/2 - 1:
                 #at the beginning of the borad, can only capture one way
                 if col == 0 and board[row+1][col] == 'b' and board[row+2][col] == '-':
                     new_board = copy.deepcopy(board)
@@ -172,7 +193,7 @@ def move(board, row, col):
                             possbile_move.append(new_board)
             #The second part is the row = len(board)/2 - 1, we just have 3 piece at most in this row.
             #this part is only for capturing
-            if row == len(board)/2 - 1:
+            if row == (len(board)-1)/2 - 1:
                 #at the begining
                 if col == 0 and board[row+1][0] == 'b' and board[row+2][col+1] == '-':
                     new_board = copy.deepcopy(board)
@@ -247,7 +268,7 @@ def move(board, row, col):
                     possbile_move.append(new_board)
 
         #the thrid part row >= len(board)/2 and not at the last row
-        elif row >= len(board)/2 and row != 2 * first_row_space - 4:
+        elif row >= (len(board)-1)/2 and row != 2 * first_row_space - 4:
             #moving left downward
             if board[row+1][col] == '-':
                 new_board = copy.deepcopy(board)
@@ -298,7 +319,7 @@ def move(board, row, col):
     #if the piece is 'b'
     if board[row][col] == 'b':
         #separate to three part, like above
-        if row > len(board)/2:
+        if row > (len(board)-1)/2:
             #'b' at the end or at the beginning
             if col == 0:
                 if board[row-1][0] == '-':
@@ -322,7 +343,7 @@ def move(board, row, col):
                     possbile_move.append(new_board)
     
             #'b' captures opponent
-            if row > len(board)/2 + 1:
+            if row > (len(board)-1)/2 + 1:
                 if col == 0 and board[row-1][col] == 'w' and board[row-2][col] == '-':
                     new_board = copy.deepcopy(board)
                     temp_this_row = list(new_board[row])
@@ -377,7 +398,7 @@ def move(board, row, col):
                             possbile_move.append(new_board)
     
             #the second part and this part is just for capturing
-            if row == len(board)/2 + 1:
+            if row == (len(board)-1)/2 + 1:
                 if col == 0 and board[row-1][0] == 'w' and board[row-2][col+1] == '-':
                     new_board = copy.deepcopy(board)
                     temp_this_row = list(new_board[row])
@@ -450,7 +471,7 @@ def move(board, row, col):
                     possbile_move.append(new_board)
     
         #the third part
-        elif row <= len(board)/2 + 1 and row != 0:
+        elif row <= (len(board)-1)/2 + 1 and row != 0:
             #for moving left upward
             if board[row-1][col] == '-':
                 new_board = copy.deepcopy(board)
@@ -511,8 +532,17 @@ print(movegen(['-----','wwww', 'bbb', 'ww', '---', 'wwww', 'bbbbb'], 'b'))
 print(movegen(['wwwww','bbbb', '---', '--', 'www', 'bbbb', '-----'], 'b'))
 print(movegen(['-----','wwww', 'bbb', '--', '---', 'bbbb', '-----'], 'b')) """
 
-print(movegen(['----','---','-w','-b-','----'],'w'))
-"""
+print(oskaplayer(['----','---','-w','-b-','----'],'w',1))
+print(oskaplayer(['----','w-w','bb','---','----'],'w',2))
+
+print(oskaplayer(['----','w--','b-','w--','----'],'w',2))
+#print(movegen(['----','---','--','ww-','----'], 'w'))
+#print(movegen(['----','--w','bb','---','----'],'b'))
+print(oskaplayer(['---b','---','w-','-b-','----'],'w', 3))
+
+print(oskaplayer(['---b','---','w-','-b-','----'],'w', 3))
+#print(static_eval(['---b','---','--','-b-','w---']))
+"""print(movegen(['--w-','www','-b','--b','b-b-'],'w'))
 print(movegen(['-bw-','---','ww','b-b','--b-'],'b'))
 print(movegen(['----','-w-','-w','--b','---b'],'b'))
 print(movegen(['----w','---w','--b','w-','-b-','---b','----b'],'w'))"""
