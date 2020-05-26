@@ -1,8 +1,4 @@
-def foo():
-    return 3,4
+from movegen import *
 
-val,val_1 = foo()
+print(oskaplayer(['----','ww-','bb','---','----'], 'w', 2))
 
-val_2 = val_1 + 1
-
-print(val_2)
