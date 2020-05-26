@@ -1,14 +1,8 @@
-from movegen.py import *
+def foo():
+    return 3,4
 
-def test(los, turn):
-    print(movegen(los, turn))
-    
-test(['wwww', '---', '--', '---', 'bbbb'], 'w')
-test(['wwww', '---', '--', '---', 'bbbb'], 'b')
-test(['wwww', '---', '--', 'b--', 'b---'], 'b')
-test(['wwww', '---', '--', '--b', '---b'], 'b')
-test(['wwww', '---', '--', '--w', '---b'], 'b')
-test(['wwww', '---', '--', 'w--', 'b---'], 'b')
-test(['wwww', '---', '--', 'w--', '-b--'], 'b')
-test(['wwww', '---', 'w-', 'w--', 'b---'], 'b')
-test(['wwww', '---', 'b-', 'w--', 'b---'], 'b')
+val,val_1 = foo()
+
+val_2 = val_1 + 1
+
+print(val_2)
